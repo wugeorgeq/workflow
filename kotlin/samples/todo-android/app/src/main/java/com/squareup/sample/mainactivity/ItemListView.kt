@@ -87,12 +87,9 @@ class ItemListView private constructor(private val itemContainer: LinearLayout) 
   }
 
   companion object {
-    fun fromLinearLayout(view: View, @IdRes id: Int): ItemListView {
-      val itemContainer = view.findViewById<LinearLayout>(id)
-          .apply {
-            // We always want to restore view state from the workflow.
-            isSaveFromParentEnabled = false
-          }
+    fun fromLinearLayout(itemContainer: LinearLayout): ItemListView {
+      // We always want to restore view state from the workflow.
+      itemContainer.isSaveFromParentEnabled = false
       return ItemListView(itemContainer)
     }
   }
