@@ -15,6 +15,7 @@
  */
 import Dispatch
 import ReactiveSwift
+import os.signpost
 
 extension WorkflowNode {
 
@@ -222,6 +223,12 @@ extension WorkflowNode.SubtreeManager {
             let reusableSink = sinkStore.findOrCreate(actionType: Action.self)
 
             let sink = Sink<Action> { action in
+                if #available(iOS 12.0, *) {
+                    let log = OSLog(subsystem: "com.squareup.Workflow", category: "Workflow")
+                    let signpostID = OSSignpostID(log: log)
+                    os_signpost(.event, log: log, name: "Sink Event", signpostID: signpostID, "Event: %{public}@", "\(action)")
+                }
+
                 reusableSink.handle(action: action)
             }
 
@@ -440,16 +447,45 @@ extension WorkflowNode.SubtreeManager {
         private let (lifetime, token) = Lifetime.make()
 
         init(worker: W, outputMap: @escaping (W.Output) -> AnyWorkflowAction<WorkflowType>, eventPipe: EventPipe) {
+            let signpostRef = NSObject()
+
             self.worker = worker
             self.signalProducer = worker.run()
             self.outputMap = outputMap
             super.init(eventPipe: eventPipe)
 
+            if #available(iOS 12.0, *) {
+                let log = OSLog(subsystem: "com.squareup.Workflow", category: "Worker")
+                let signpostID = OSSignpostID(log: log, object: signpostRef)
+                os_signpost(.begin, log: log, name: "Worker Created", signpostID: signpostID, "Worker: %{public}@", String(describing: W.self))
+            }
+
             signalProducer
                 .take(during: lifetime)
                 .observe(on: QueueScheduler.workflowExecution)
-                .startWithValues { [weak self] output in
-                    self?.handle(output: output)
+                .start { [weak self] event in
+                    switch event {
+                    case .value(let output):
+                        self?.handle(output: output)
+                    case .completed:
+                        if #available(iOS 12.0, *) {
+                            let log = OSLog(subsystem: "com.squareup.Workflow", category: "Worker")
+                            let signpostID = OSSignpostID(log: log, object: signpostRef)
+                            os_signpost(.end, log: log, name: "Worker Created", signpostID: signpostID)
+                        }
+                    case .interrupted:
+                        if #available(iOS 12.0, *) {
+                            let log = OSLog(subsystem: "com.squareup.Workflow", category: "Worker")
+                            let signpostID = OSSignpostID(log: log, object: signpostRef)
+                            os_signpost(.end, log: log, name: "Worker Created", signpostID: signpostID, "Interrupted")
+                        }
+                    case .failed:
+                        if #available(iOS 12.0, *) {
+                            let log = OSLog(subsystem: "com.squareup.Workflow", category: "Worker")
+                            let signpostID = OSSignpostID(log: log, object: signpostRef)
+                            os_signpost(.end, log: log, name: "Worker Created", signpostID: signpostID, "Failed")
+                        }
+                    }
                 }
         }
 

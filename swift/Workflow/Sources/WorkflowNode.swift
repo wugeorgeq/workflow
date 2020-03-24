@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 import ReactiveSwift
+import os.signpost
 
 /// Manages a running workflow.
 final class WorkflowNode<WorkflowType: Workflow> {
@@ -28,8 +29,16 @@ final class WorkflowNode<WorkflowType: Workflow> {
 
     /// Manages the children of this workflow, including diffs during/after render passes.
     private let subtreeManager = SubtreeManager()
+
+    /// Marker to lookup OSSignpostID
+    private let signpostRef = NSObject()
     
     init(workflow: WorkflowType) {
+        if #available(iOS 12.0, *) {
+            let log = OSLog(subsystem: "com.squareup.Workflow", category: "Workflow")
+            let signpostID = OSSignpostID(log: log, object: signpostRef)
+            os_signpost(.begin, log: log, name: "WorkflowAlive", signpostID: signpostID, "Workflow: %{public}@", String(describing: WorkflowType.self))
+        }
         
         /// Get the initial state
         self.workflow = workflow
@@ -39,6 +48,14 @@ final class WorkflowNode<WorkflowType: Workflow> {
             self?.handle(subtreeOutput: output)
         }
 
+    }
+
+    deinit {
+        if #available(iOS 12.0, *) {
+            let log = OSLog(subsystem: "com.squareup.Workflow", category: "Workflow")
+            let signpostID = OSSignpostID(log: log, object: signpostRef)
+            os_signpost(.end, log: log, name: "WorkflowAlive", signpostID: signpostID)
+        }
     }
 
     /// Handles an event produced by the subtree manager
