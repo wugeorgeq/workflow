@@ -37,7 +37,7 @@ final class WorkflowNode<WorkflowType: Workflow> {
         if #available(iOS 12.0, *) {
             let log = OSLog(subsystem: "com.squareup.Workflow", category: "Workflow")
             let signpostID = OSSignpostID(log: log, object: signpostRef)
-            os_signpost(.begin, log: log, name: "WorkflowAlive", signpostID: signpostID, "Workflow: %{public}@", String(describing: WorkflowType.self))
+            os_signpost(.begin, log: log, name: "Alive", signpostID: signpostID, "Workflow: %{public}@", String(describing: WorkflowType.self))
         }
         
         /// Get the initial state
@@ -54,7 +54,7 @@ final class WorkflowNode<WorkflowType: Workflow> {
         if #available(iOS 12.0, *) {
             let log = OSLog(subsystem: "com.squareup.Workflow", category: "Workflow")
             let signpostID = OSSignpostID(log: log, object: signpostRef)
-            os_signpost(.end, log: log, name: "WorkflowAlive", signpostID: signpostID)
+            os_signpost(.end, log: log, name: "Alive", signpostID: signpostID)
         }
     }
 
@@ -90,7 +90,7 @@ final class WorkflowNode<WorkflowType: Workflow> {
         if #available(iOS 12.0, *) {
             let log = OSLog(subsystem: "com.squareup.Workflow", category: "Workflow")
             let signpostID = OSSignpostID(log: log, object: signpostRef)
-            os_signpost(.begin, log: log, name: "Render", signpostID: signpostID, "Workflow: %{public}@", String(describing: WorkflowType.self))
+            os_signpost(.begin, log: log, name: "Render", signpostID: signpostID, "Render Workflow: %{public}@", String(describing: WorkflowType.self))
         }
 
         defer {
