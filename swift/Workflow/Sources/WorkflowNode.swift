@@ -87,6 +87,18 @@ final class WorkflowNode<WorkflowType: Workflow> {
     }
 
     func render() -> WorkflowType.Rendering {
+        if #available(iOS 12.0, *) {
+            let log = OSLog(subsystem: "com.squareup.Workflow", category: "Workflow")
+            let signpostID = OSSignpostID(log: log, object: signpostRef)
+            os_signpost(.begin, log: log, name: "Render", signpostID: signpostID, "Workflow: %{public}@", String(describing: WorkflowType.self))
+        }
+
+        if #available(iOS 12.0, *) {
+            let log = OSLog(subsystem: "com.squareup.Workflow", category: "Workflow")
+            let signpostID = OSSignpostID(log: log, object: signpostRef)
+            os_signpost(.end, log: log, name: "Render", signpostID: signpostID)
+        }
+
         return subtreeManager.render { context in
             return workflow
                 .render(
