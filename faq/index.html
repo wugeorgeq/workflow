@@ -1,0 +1,1069 @@
+
+
+
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      <meta http-equiv="x-ua-compatible" content="ie=edge">
+      
+        <meta name="description" content="A library for making composable state machines, and UIs driven by those state machines.">
+      
+      
+        <link rel="canonical" href="https://square.github.io/workflow/faq/">
+      
+      
+        <meta name="author" content="Square, Inc.">
+      
+      
+        <meta name="lang:clipboard.copy" content="Copy to clipboard">
+      
+        <meta name="lang:clipboard.copied" content="Copied to clipboard">
+      
+        <meta name="lang:search.language" content="en">
+      
+        <meta name="lang:search.pipeline.stopwords" content="True">
+      
+        <meta name="lang:search.pipeline.trimmer" content="True">
+      
+        <meta name="lang:search.result.none" content="No matching documents">
+      
+        <meta name="lang:search.result.one" content="1 matching document">
+      
+        <meta name="lang:search.result.other" content="# matching documents">
+      
+        <meta name="lang:search.tokenizer" content="[\s\-]+">
+      
+      <link rel="shortcut icon" href="../images/icon-square.png">
+      <meta name="generator" content="mkdocs-1.1, mkdocs-material-4.6.3">
+    
+    
+      
+        <title>FAQ - Workflow</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/application.adb8469c.css">
+      
+        <link rel="stylesheet" href="../assets/stylesheets/application-palette.a8b3c06d.css">
+      
+      
+        
+        
+        <meta name="theme-color" content="#ef5350">
+      
+    
+    
+      <script src="../assets/javascripts/modernizr.86422ebf.js"></script>
+    
+    
+      
+        <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&display=fallback">
+        <style>body,input{font-family:"Roboto","Helvetica Neue",Helvetica,Arial,sans-serif}code,kbd,pre{font-family:"Roboto Mono","Courier New",Courier,monospace}</style>
+      
+    
+    <link rel="stylesheet" href="../assets/fonts/material-icons.css">
+    
+    
+      <link rel="stylesheet" href="../css/app.css">
+    
+    
+      
+        
+<script>
+  window.ga = window.ga || function() {
+    (ga.q = ga.q || []).push(arguments)
+  }
+  ga.l = +new Date
+  /* Setup integration and send page view */
+  ga("create", "UA-144488214-1", "auto")
+  ga("set", "anonymizeIp", true)
+  ga("send", "pageview")
+  /* Register handler to log search on blur */
+  document.addEventListener("DOMContentLoaded", () => {
+    if (document.forms.search) {
+      var query = document.forms.search.query
+      query.addEventListener("blur", function() {
+        if (this.value) {
+          var path = document.location.pathname;
+          ga("send", "pageview", path + "?q=" + this.value)
+        }
+      })
+    }
+  })
+</script>
+<script async src="https://www.google-analytics.com/analytics.js"></script>
+      
+    
+    
+  </head>
+  
+    
+    
+    <body dir="ltr" data-md-color-primary="red" data-md-color-accent="pink">
+  
+    <svg class="md-svg">
+      <defs>
+        
+        
+          <svg xmlns="http://www.w3.org/2000/svg" width="416" height="448" viewBox="0 0 416 448" id="__github"><path fill="currentColor" d="M160 304q0 10-3.125 20.5t-10.75 19T128 352t-18.125-8.5-10.75-19T96 304t3.125-20.5 10.75-19T128 256t18.125 8.5 10.75 19T160 304zm160 0q0 10-3.125 20.5t-10.75 19T288 352t-18.125-8.5-10.75-19T256 304t3.125-20.5 10.75-19T288 256t18.125 8.5 10.75 19T320 304zm40 0q0-30-17.25-51T296 232q-10.25 0-48.75 5.25Q229.5 240 208 240t-39.25-2.75Q130.75 232 120 232q-29.5 0-46.75 21T56 304q0 22 8 38.375t20.25 25.75 30.5 15 35 7.375 37.25 1.75h42q20.5 0 37.25-1.75t35-7.375 30.5-15 20.25-25.75T360 304zm56-44q0 51.75-15.25 82.75-9.5 19.25-26.375 33.25t-35.25 21.5-42.5 11.875-42.875 5.5T212 416q-19.5 0-35.5-.75t-36.875-3.125-38.125-7.5-34.25-12.875T37 371.5t-21.5-28.75Q0 312 0 260q0-59.25 34-99-6.75-20.5-6.75-42.5 0-29 12.75-54.5 27 0 47.5 9.875t47.25 30.875Q171.5 96 212 96q37 0 70 8 26.25-20.5 46.75-30.25T376 64q12.75 25.5 12.75 54.5 0 21.75-6.75 42 34 40 34 99.5z"/></svg>
+        
+      </defs>
+    </svg>
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" data-md-component="overlay" for="__drawer"></label>
+    
+      <a href="#frequently-asked-questions" tabindex="0" class="md-skip">
+        Skip to content
+      </a>
+    
+    
+      <header class="md-header" data-md-component="header">
+  <nav class="md-header-nav md-grid">
+    <div class="md-flex">
+      <div class="md-flex__cell md-flex__cell--shrink">
+        <a href="https://square.github.io/workflow/" title="Workflow" aria-label="Workflow" class="md-header-nav__button md-logo">
+          
+            <img alt="logo" src="../images/icon-square.png" width="24" height="24">
+          
+        </a>
+      </div>
+      <div class="md-flex__cell md-flex__cell--shrink">
+        <label class="md-icon md-icon--menu md-header-nav__button" for="__drawer"></label>
+      </div>
+      <div class="md-flex__cell md-flex__cell--stretch">
+        <div class="md-flex__ellipsis md-header-nav__title" data-md-component="title">
+          
+            <span class="md-header-nav__topic">
+              Workflow
+            </span>
+            <span class="md-header-nav__topic">
+              
+                FAQ
+              
+            </span>
+          
+        </div>
+      </div>
+      <div class="md-flex__cell md-flex__cell--shrink">
+        
+      </div>
+      
+        <div class="md-flex__cell md-flex__cell--shrink">
+          <div class="md-header-nav__source">
+            
+
+
+  
+
+<a href="https://github.com/square/workflow/" title="Go to repository" class="md-source" data-md-source="github">
+  
+    <div class="md-source__icon">
+      <svg viewBox="0 0 24 24" width="24" height="24">
+        <use xlink:href="#__github" width="24" height="24"></use>
+      </svg>
+    </div>
+  
+  <div class="md-source__repository">
+    Workflow
+  </div>
+</a>
+          </div>
+        </div>
+      
+    </div>
+  </nav>
+</header>
+    
+    <div class="md-container">
+      
+        
+      
+      
+        
+
+<nav class="md-tabs" data-md-component="tabs">
+  <div class="md-tabs__inner md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  <li class="md-tabs__item">
+    
+      <a href=".." class="md-tabs__link md-tabs__link--active">
+        Overview
+      </a>
+    
+  </li>
+
+      
+        
+  
+  
+    <li class="md-tabs__item">
+      
+        <a href="../userguide/concepts/" class="md-tabs__link">
+          User Guide
+        </a>
+      
+    </li>
+  
+
+      
+        
+  
+  
+    
+    
+  
+  
+    <li class="md-tabs__item">
+      
+        <a href="../tutorial/" class="md-tabs__link">
+          Tutorials & Samples
+        </a>
+      
+    </li>
+  
+
+  
+
+      
+        
+  
+  
+    <li class="md-tabs__item">
+      
+        <a href="../kotlin/api/workflow/" class="md-tabs__link">
+          API Reference
+        </a>
+      
+    </li>
+  
+
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    </ul>
+  </div>
+</nav>
+      
+      <main class="md-main" role="main">
+        <div class="md-main__inner md-grid" data-md-component="container">
+          
+            
+              <div class="md-sidebar md-sidebar--primary" data-md-component="navigation">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    <nav class="md-nav md-nav--primary" data-md-level="0">
+  <label class="md-nav__title md-nav__title--site" for="__drawer">
+    <a href="https://square.github.io/workflow/" title="Workflow" class="md-nav__button md-logo">
+      
+        <img alt="logo" src="../images/icon-square.png" width="48" height="48">
+      
+    </a>
+    Workflow
+  </label>
+  
+    <div class="md-nav__source">
+      
+
+
+  
+
+<a href="https://github.com/square/workflow/" title="Go to repository" class="md-source" data-md-source="github">
+  
+    <div class="md-source__icon">
+      <svg viewBox="0 0 24 24" width="24" height="24">
+        <use xlink:href="#__github" width="24" height="24"></use>
+      </svg>
+    </div>
+  
+  <div class="md-source__repository">
+    Workflow
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href=".." title="Overview" class="md-nav__link">
+      Overview
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-2" type="checkbox" id="nav-2">
+    
+    <label class="md-nav__link" for="nav-2">
+      User Guide
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-2">
+        User Guide
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../userguide/concepts/" title="Core Concepts" class="md-nav__link">
+      Core Concepts
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-2-2" type="checkbox" id="nav-2-2">
+    
+    <label class="md-nav__link" for="nav-2-2">
+      Workflow Core
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="2">
+      <label class="md-nav__title" for="nav-2-2">
+        Workflow Core
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../userguide/core-workflow/" title="Workflow" class="md-nav__link">
+      Workflow
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../userguide/core-worker/" title="Worker" class="md-nav__link">
+      Worker
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../userguide/core-patterns/" title="Patterns" class="md-nav__link">
+      Patterns
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../userguide/ui-concepts/" title="Workflow UI" class="md-nav__link">
+      Workflow UI
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../userguide/testing-concepts/" title="Workflow Testing" class="md-nav__link">
+      Workflow Testing
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../userguide/motivation/" title="Motivation & Architectural Concepts" class="md-nav__link">
+      Motivation & Architectural Concepts
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../userguide/comparison/" title="Comparison with other frameworks" class="md-nav__link">
+      Comparison with other frameworks
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../userguide/implementation/" title="Under the Hood: Implementation Notes" class="md-nav__link">
+      Under the Hood: Implementation Notes
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-3" type="checkbox" id="nav-3">
+    
+    <label class="md-nav__link" for="nav-3">
+      Tutorials & Samples
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-3">
+        Tutorials & Samples
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-3-1" type="checkbox" id="nav-3-1">
+    
+    <label class="md-nav__link" for="nav-3-1">
+      Tutorial
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="2">
+      <label class="md-nav__title" for="nav-3-1">
+        Tutorial
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../tutorial/" title="Overview" class="md-nav__link">
+      Overview
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../tutorial/adding-workflow-to-a-project/" title="Adding Workflow to a project" class="md-nav__link">
+      Adding Workflow to a project
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../tutorial/tooling/" title="Tooling" class="md-nav__link">
+      Tooling
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../tutorial/building-a-workflow/" title="Building a Workflow" class="md-nav__link">
+      Building a Workflow
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../tutorial/building-a-view-controller-from-screen/" title="Building a View Controller from a Screen" class="md-nav__link">
+      Building a View Controller from a Screen
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../tutorial/using-a-workflow-for-ui/" title="Using a Workflow to Show UI" class="md-nav__link">
+      Using a Workflow to Show UI
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../code-recipes/" title="Code Recipes" class="md-nav__link">
+      Code Recipes
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../development-process/" title="Development Process" class="md-nav__link">
+      Development Process
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-4" type="checkbox" id="nav-4">
+    
+    <label class="md-nav__link" for="nav-4">
+      API Reference
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-4">
+        API Reference
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../kotlin/api/workflow/" title="Kotlin" class="md-nav__link">
+      Kotlin
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-4-2" type="checkbox" id="nav-4-2">
+    
+    <label class="md-nav__link" for="nav-4-2">
+      Swift API
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="2">
+      <label class="md-nav__title" for="nav-4-2">
+        Swift API
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../swift/api/Workflow/" title="Workflow" class="md-nav__link">
+      Workflow 
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../swift/api/WorkflowUI/" title="WorkflowUI" class="md-nav__link">
+      WorkflowUI 
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../swift/api/WorkflowTesting/" title="WorkflowTesting" class="md-nav__link">
+      WorkflowTesting 
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active">
+    
+    <input class="md-toggle md-nav__toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+    
+      
+    
+    
+      <label class="md-nav__link md-nav__link--active" for="__toc">
+        FAQ
+      </label>
+    
+    <a href="./" title="FAQ" class="md-nav__link md-nav__link--active">
+      FAQ
+    </a>
+    
+      
+<nav class="md-nav md-nav--secondary">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">Table of contents</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#isnt-this-basically-reactelm" class="md-nav__link">
+    Isn't this basically React/Elm?
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#how-is-this-different-than-mvrx" class="md-nav__link">
+    How is this different than MvRx?
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#how-do-i-get-involved-andor-contribute" class="md-nav__link">
+    How do I get involved and/or contribute?
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#this-seems-clever-can-i-stick-with-a-traditional-development-approach" class="md-nav__link">
+    This seems clever. Can I stick with a traditional development approach?
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#why-do-we-need-another-architecture" class="md-nav__link">
+    Why do we need another architecture?
+  </a>
+  
+</li>
+      
+      
+      
+      
+      
+    </ul>
+  
+</nav>
+    
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../CHANGELOG/" title="Change Log ⏏" class="md-nav__link">
+      Change Log ⏏
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../CONTRIBUTING/" title="Contributing" class="md-nav__link">
+      Contributing
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../CODE_OF_CONDUCT/" title="Code of Conduct" class="md-nav__link">
+      Code of Conduct
+    </a>
+  </li>
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="toc">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+<nav class="md-nav md-nav--secondary">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">Table of contents</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#isnt-this-basically-reactelm" class="md-nav__link">
+    Isn't this basically React/Elm?
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#how-is-this-different-than-mvrx" class="md-nav__link">
+    How is this different than MvRx?
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#how-do-i-get-involved-andor-contribute" class="md-nav__link">
+    How do I get involved and/or contribute?
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#this-seems-clever-can-i-stick-with-a-traditional-development-approach" class="md-nav__link">
+    This seems clever. Can I stick with a traditional development approach?
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#why-do-we-need-another-architecture" class="md-nav__link">
+    Why do we need another architecture?
+  </a>
+  
+</li>
+      
+      
+      
+      
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content">
+            <article class="md-content__inner md-typeset">
+              
+                
+                  <a href="https://github.com/square/workflow/edit/master/docs/faq.md" title="Edit this page" class="md-icon md-content__icon">&#xE3C9;</a>
+                
+                
+                <h1 id="frequently-asked-questions">Frequently Asked Questions<a class="headerlink" href="#frequently-asked-questions" title="Permanent link">&para;</a></h1>
+<h2 id="isnt-this-basically-reactelm">Isn&rsquo;t this basically React/Elm?<a class="headerlink" href="#isnt-this-basically-reactelm" title="Permanent link">&para;</a></h2>
+<p><a href="https://reactjs.org/">React</a> and <a href="https://guide.elm-lang.org/architecture/">the Elm architecture</a>
+were both strong influences for this library. However both those libraries are written for
+JavaScript. Workflows are written in and for both Kotlin and Swift, making use of features of those
+languages, and with usability from those languages as a major design goal. There are also a few
+architectural differences:</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>React</th>
+<th>Elm</th>
+<th>Workflow</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Modularity</strong></td>
+<td><code>Component</code></td>
+<td>TK</td>
+<td><code>Workflow</code> is analogous to React&rsquo;s <code>Component</code></td>
+</tr>
+<tr>
+<td><strong>State</strong></td>
+<td>Each <code>Component</code> has a <code>state</code> property that is read directly and updated via a <code>setState</code> method.</td>
+<td>State is called <code>Model</code> in Elm.</td>
+<td><code>Workflow</code>s have an associated state type. The state can only be updated when the props change, or with a <code>WorkflowAction</code>.</td>
+</tr>
+<tr>
+<td><strong>Views</strong></td>
+<td><code>Component</code>s have a <code>render</code> method that returns a tree of elements.</td>
+<td>Elm applications have a <code>view</code> function that returns a tree of elements.</td>
+<td>Since workflows are not tied to any particular UI view layer, they can have an arbitrary rendering type. The <code>render()</code> method returns this type.</td>
+</tr>
+<tr>
+<td><strong>Dependencies</strong></td>
+<td>React allows parent components to pass &ldquo;props&rdquo; down to their children.</td>
+<td>TK</td>
+<td>In Swift, <code>Workflow</code>s are often structs that need to be initialized with their dependencies and configuration data from their parent. In Kotlin, they have a separate type parameter (<code>PropsT</code>) that is always passed down from the parent. <code>Workflow</code> instances can also inject dependencies, and play nicely with dependency injection frameworks.</td>
+</tr>
+<tr>
+<td><strong>Composability</strong></td>
+<td>TK</td>
+<td>TK</td>
+<td>TK</td>
+</tr>
+<tr>
+<td><strong>Event Handling</strong></td>
+<td>TK</td>
+<td>TK</td>
+<td>TK</td>
+</tr>
+</tbody>
+</table>
+<h2 id="how-is-this-different-than-mvrx">How is this different than MvRx?<a class="headerlink" href="#how-is-this-different-than-mvrx" title="Permanent link">&para;</a></h2>
+<p>Besides being very Android and Rx specific, MvRx solves view modeling problems only
+per screen. Workflow was mainly inspired by the need to manage and compose
+navigation in apps with dozens or hundreds of screens.</p>
+<h2 id="how-do-i-get-involved-andor-contribute">How do I get involved and/or contribute?<a class="headerlink" href="#how-do-i-get-involved-andor-contribute" title="Permanent link">&para;</a></h2>
+<ul>
+<li><a href="https://github.com/square/workflow">Workflow is open source!</a></li>
+<li>See our <a href="https://github.com/square/workflow/blob/master/CONTRIBUTING.md">CONTRIBUTING</a> doc to get
+  started.</li>
+<li>Stay tuned! We&rsquo;re considering hosting a public Slack channel for open source contributors.</li>
+</ul>
+<h2 id="this-seems-clever-can-i-stick-with-a-traditional-development-approach">This seems clever. Can I stick with a traditional development approach?<a class="headerlink" href="#this-seems-clever-can-i-stick-with-a-traditional-development-approach" title="Permanent link">&para;</a></h2>
+<p>Of course! Workflow was designed to make complex application architecture predictable and safe for
+large development teams. We&rsquo;re confident that it brings benefits even to smaller projects, but there
+is never only one right way to build software. We recommend to <a href="https://www.thoughtworks.com/insights/blog/write-quality-mobile-apps-any-architecture">follow good practices and use an
+architecture that makes sense for your project</a>.</p>
+<h2 id="why-do-we-need-another-architecture">Why do we need another architecture?<a class="headerlink" href="#why-do-we-need-another-architecture" title="Permanent link">&para;</a></h2>
+<p>Architectural patterns with weak access controls and heavy use of shared mutable state make it
+incredibly difficult to fully understand the behavior of the code that we are writing. This quickly
+devolves into an arms race as the codebase grows: if every feature or component in the codebase
+might change anything at any time, bug fixes turn into a really sad game of whack-a-mole.</p>
+<p>We have seen this pattern occur repeatedly in traditional mobile applications using patterns like
+MVC.</p>
+<p>Workflow defines strong boundaries and contracts between separate parts of the application to ensure
+that our code remains predictable and maintainable as the size and complexity of the codebase grows.</p>
+                
+                  
+                
+                
+              
+              
+                
+
+
+              
+            </article>
+          </div>
+        </div>
+      </main>
+      
+        
+<footer class="md-footer">
+  
+    <div class="md-footer-nav">
+      <nav class="md-footer-nav__inner md-grid">
+        
+          <a href="../swift/api/WorkflowTesting/" title="WorkflowTesting" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+            <div class="md-flex__cell md-flex__cell--shrink">
+              <i class="md-icon md-icon--arrow-back md-footer-nav__button"></i>
+            </div>
+            <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
+              <span class="md-flex__ellipsis">
+                <span class="md-footer-nav__direction">
+                  Previous
+                </span>
+                WorkflowTesting 
+              </span>
+            </div>
+          </a>
+        
+        
+          <a href="../CHANGELOG/" title="Change Log ⏏" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
+            <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
+              <span class="md-flex__ellipsis">
+                <span class="md-footer-nav__direction">
+                  Next
+                </span>
+                Change Log ⏏
+              </span>
+            </div>
+            <div class="md-flex__cell md-flex__cell--shrink">
+              <i class="md-icon md-icon--arrow-forward md-footer-nav__button"></i>
+            </div>
+          </a>
+        
+      </nav>
+    </div>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-footer-copyright">
+        
+          <div class="md-footer-copyright__highlight">
+            Copyright &copy; 2019 Square, Inc.
+          </div>
+        
+        powered by
+        <a href="https://www.mkdocs.org" target="_blank" rel="noopener">MkDocs</a>
+        and
+        <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+          Material for MkDocs</a>
+      </div>
+      
+  <div class="md-footer-social">
+    <link rel="stylesheet" href="../assets/fonts/font-awesome.css">
+    
+      <a href="https://square.github.io/" target="_blank" rel="noopener" title="globe" class="md-footer-social__link fa fa-globe"></a>
+    
+      <a href="https://github.com/square" target="_blank" rel="noopener" title="github-alt" class="md-footer-social__link fa fa-github-alt"></a>
+    
+      <a href="https://twitter.com/squareeng" target="_blank" rel="noopener" title="twitter" class="md-footer-social__link fa fa-twitter"></a>
+    
+      <a href="https://www.linkedin.com/company/joinsquare/" target="_blank" rel="noopener" title="linkedin" class="md-footer-social__link fa fa-linkedin"></a>
+    
+  </div>
+
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    
+      <script src="../assets/javascripts/application.c33a9706.js"></script>
+      
+      <script>app.initialize({version:"1.1",url:{base:".."}})</script>
+      
+    
+  </body>
+</html>

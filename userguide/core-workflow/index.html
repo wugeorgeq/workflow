@@ -1,0 +1,1440 @@
+
+
+
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      <meta http-equiv="x-ua-compatible" content="ie=edge">
+      
+        <meta name="description" content="A library for making composable state machines, and UIs driven by those state machines.">
+      
+      
+        <link rel="canonical" href="https://square.github.io/workflow/userguide/core-workflow/">
+      
+      
+        <meta name="author" content="Square, Inc.">
+      
+      
+        <meta name="lang:clipboard.copy" content="Copy to clipboard">
+      
+        <meta name="lang:clipboard.copied" content="Copied to clipboard">
+      
+        <meta name="lang:search.language" content="en">
+      
+        <meta name="lang:search.pipeline.stopwords" content="True">
+      
+        <meta name="lang:search.pipeline.trimmer" content="True">
+      
+        <meta name="lang:search.result.none" content="No matching documents">
+      
+        <meta name="lang:search.result.one" content="1 matching document">
+      
+        <meta name="lang:search.result.other" content="# matching documents">
+      
+        <meta name="lang:search.tokenizer" content="[\s\-]+">
+      
+      <link rel="shortcut icon" href="../../images/icon-square.png">
+      <meta name="generator" content="mkdocs-1.1, mkdocs-material-4.6.3">
+    
+    
+      
+        <title>Workflow - Workflow</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/application.adb8469c.css">
+      
+        <link rel="stylesheet" href="../../assets/stylesheets/application-palette.a8b3c06d.css">
+      
+      
+        
+        
+        <meta name="theme-color" content="#ef5350">
+      
+    
+    
+      <script src="../../assets/javascripts/modernizr.86422ebf.js"></script>
+    
+    
+      
+        <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&display=fallback">
+        <style>body,input{font-family:"Roboto","Helvetica Neue",Helvetica,Arial,sans-serif}code,kbd,pre{font-family:"Roboto Mono","Courier New",Courier,monospace}</style>
+      
+    
+    <link rel="stylesheet" href="../../assets/fonts/material-icons.css">
+    
+    
+      <link rel="stylesheet" href="../../css/app.css">
+    
+    
+      
+        
+<script>
+  window.ga = window.ga || function() {
+    (ga.q = ga.q || []).push(arguments)
+  }
+  ga.l = +new Date
+  /* Setup integration and send page view */
+  ga("create", "UA-144488214-1", "auto")
+  ga("set", "anonymizeIp", true)
+  ga("send", "pageview")
+  /* Register handler to log search on blur */
+  document.addEventListener("DOMContentLoaded", () => {
+    if (document.forms.search) {
+      var query = document.forms.search.query
+      query.addEventListener("blur", function() {
+        if (this.value) {
+          var path = document.location.pathname;
+          ga("send", "pageview", path + "?q=" + this.value)
+        }
+      })
+    }
+  })
+</script>
+<script async src="https://www.google-analytics.com/analytics.js"></script>
+      
+    
+    
+  </head>
+  
+    
+    
+    <body dir="ltr" data-md-color-primary="red" data-md-color-accent="pink">
+  
+    <svg class="md-svg">
+      <defs>
+        
+        
+          <svg xmlns="http://www.w3.org/2000/svg" width="416" height="448" viewBox="0 0 416 448" id="__github"><path fill="currentColor" d="M160 304q0 10-3.125 20.5t-10.75 19T128 352t-18.125-8.5-10.75-19T96 304t3.125-20.5 10.75-19T128 256t18.125 8.5 10.75 19T160 304zm160 0q0 10-3.125 20.5t-10.75 19T288 352t-18.125-8.5-10.75-19T256 304t3.125-20.5 10.75-19T288 256t18.125 8.5 10.75 19T320 304zm40 0q0-30-17.25-51T296 232q-10.25 0-48.75 5.25Q229.5 240 208 240t-39.25-2.75Q130.75 232 120 232q-29.5 0-46.75 21T56 304q0 22 8 38.375t20.25 25.75 30.5 15 35 7.375 37.25 1.75h42q20.5 0 37.25-1.75t35-7.375 30.5-15 20.25-25.75T360 304zm56-44q0 51.75-15.25 82.75-9.5 19.25-26.375 33.25t-35.25 21.5-42.5 11.875-42.875 5.5T212 416q-19.5 0-35.5-.75t-36.875-3.125-38.125-7.5-34.25-12.875T37 371.5t-21.5-28.75Q0 312 0 260q0-59.25 34-99-6.75-20.5-6.75-42.5 0-29 12.75-54.5 27 0 47.5 9.875t47.25 30.875Q171.5 96 212 96q37 0 70 8 26.25-20.5 46.75-30.25T376 64q12.75 25.5 12.75 54.5 0 21.75-6.75 42 34 40 34 99.5z"/></svg>
+        
+      </defs>
+    </svg>
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" data-md-component="overlay" for="__drawer"></label>
+    
+      <a href="#workflow-core-workflow" tabindex="0" class="md-skip">
+        Skip to content
+      </a>
+    
+    
+      <header class="md-header" data-md-component="header">
+  <nav class="md-header-nav md-grid">
+    <div class="md-flex">
+      <div class="md-flex__cell md-flex__cell--shrink">
+        <a href="https://square.github.io/workflow/" title="Workflow" aria-label="Workflow" class="md-header-nav__button md-logo">
+          
+            <img alt="logo" src="../../images/icon-square.png" width="24" height="24">
+          
+        </a>
+      </div>
+      <div class="md-flex__cell md-flex__cell--shrink">
+        <label class="md-icon md-icon--menu md-header-nav__button" for="__drawer"></label>
+      </div>
+      <div class="md-flex__cell md-flex__cell--stretch">
+        <div class="md-flex__ellipsis md-header-nav__title" data-md-component="title">
+          
+            Workflow
+          
+        </div>
+      </div>
+      <div class="md-flex__cell md-flex__cell--shrink">
+        
+      </div>
+      
+        <div class="md-flex__cell md-flex__cell--shrink">
+          <div class="md-header-nav__source">
+            
+
+
+  
+
+<a href="https://github.com/square/workflow/" title="Go to repository" class="md-source" data-md-source="github">
+  
+    <div class="md-source__icon">
+      <svg viewBox="0 0 24 24" width="24" height="24">
+        <use xlink:href="#__github" width="24" height="24"></use>
+      </svg>
+    </div>
+  
+  <div class="md-source__repository">
+    Workflow
+  </div>
+</a>
+          </div>
+        </div>
+      
+    </div>
+  </nav>
+</header>
+    
+    <div class="md-container">
+      
+        
+      
+      
+        
+
+  
+
+<nav class="md-tabs md-tabs--active" data-md-component="tabs">
+  <div class="md-tabs__inner md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  <li class="md-tabs__item">
+    
+      <a href="../.." class="md-tabs__link">
+        Overview
+      </a>
+    
+  </li>
+
+      
+        
+  
+  
+    <li class="md-tabs__item">
+      
+        <a href="../concepts/" class="md-tabs__link md-tabs__link--active">
+          User Guide
+        </a>
+      
+    </li>
+  
+
+      
+        
+  
+  
+    
+    
+  
+  
+    <li class="md-tabs__item">
+      
+        <a href="../../tutorial/" class="md-tabs__link">
+          Tutorials & Samples
+        </a>
+      
+    </li>
+  
+
+  
+
+      
+        
+  
+  
+    <li class="md-tabs__item">
+      
+        <a href="../../kotlin/api/workflow/" class="md-tabs__link">
+          API Reference
+        </a>
+      
+    </li>
+  
+
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    </ul>
+  </div>
+</nav>
+      
+      <main class="md-main" role="main">
+        <div class="md-main__inner md-grid" data-md-component="container">
+          
+            
+              <div class="md-sidebar md-sidebar--primary" data-md-component="navigation">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    <nav class="md-nav md-nav--primary" data-md-level="0">
+  <label class="md-nav__title md-nav__title--site" for="__drawer">
+    <a href="https://square.github.io/workflow/" title="Workflow" class="md-nav__button md-logo">
+      
+        <img alt="logo" src="../../images/icon-square.png" width="48" height="48">
+      
+    </a>
+    Workflow
+  </label>
+  
+    <div class="md-nav__source">
+      
+
+
+  
+
+<a href="https://github.com/square/workflow/" title="Go to repository" class="md-source" data-md-source="github">
+  
+    <div class="md-source__icon">
+      <svg viewBox="0 0 24 24" width="24" height="24">
+        <use xlink:href="#__github" width="24" height="24"></use>
+      </svg>
+    </div>
+  
+  <div class="md-source__repository">
+    Workflow
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../.." title="Overview" class="md-nav__link">
+      Overview
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-2" type="checkbox" id="nav-2" checked>
+    
+    <label class="md-nav__link" for="nav-2">
+      User Guide
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-2">
+        User Guide
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../concepts/" title="Core Concepts" class="md-nav__link">
+      Core Concepts
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-2-2" type="checkbox" id="nav-2-2" checked>
+    
+    <label class="md-nav__link" for="nav-2-2">
+      Workflow Core
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="2">
+      <label class="md-nav__title" for="nav-2-2">
+        Workflow Core
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active">
+    
+    <input class="md-toggle md-nav__toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+    
+      
+    
+    
+      <label class="md-nav__link md-nav__link--active" for="__toc">
+        Workflow
+      </label>
+    
+    <a href="./" title="Workflow" class="md-nav__link md-nav__link--active">
+      Workflow
+    </a>
+    
+      
+<nav class="md-nav md-nav--secondary">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">Table of contents</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#the-role-of-a-workflow" class="md-nav__link">
+    The Role of a Workflow
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#workflows-have-state" class="md-nav__link">
+    Workflows have state
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#private-state" class="md-nav__link">
+    Private state
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#props" class="md-nav__link">
+    Props
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#workflows-are-advanced-by-workflowactions" class="md-nav__link">
+    Workflows are advanced by WorkflowActions
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#workflows-can-emit-output-events-up-the-hierarchy-to-their-parent" class="md-nav__link">
+    Workflows can emit output events up the hierarchy to their parent
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#workflows-produce-an-external-representation-of-their-state-via-rendering" class="md-nav__link">
+    Workflows produce an external representation of their state via Rendering
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#workflows-can-respond-to-ui-events" class="md-nav__link">
+    Workflows can respond to UI events
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#workflows-form-a-hierarchy-they-may-have-children" class="md-nav__link">
+    Workflows form a hierarchy (they may have children)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#workflows-can-subscribe-to-external-event-sources" class="md-nav__link">
+    Workflows can subscribe to external event sources
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#workflows-can-perform-asynchronous-tasks-workers" class="md-nav__link">
+    Workflows can perform asynchronous tasks (Workers)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#workflows-can-be-saved-to-and-restored-from-a-snapshot-kotlin-only" class="md-nav__link">
+    Workflows can be saved to and restored from a snapshot (Kotlin only)
+  </a>
+  
+</li>
+      
+      
+      
+      
+      
+    </ul>
+  
+</nav>
+    
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../core-worker/" title="Worker" class="md-nav__link">
+      Worker
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../core-patterns/" title="Patterns" class="md-nav__link">
+      Patterns
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../ui-concepts/" title="Workflow UI" class="md-nav__link">
+      Workflow UI
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../testing-concepts/" title="Workflow Testing" class="md-nav__link">
+      Workflow Testing
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../motivation/" title="Motivation & Architectural Concepts" class="md-nav__link">
+      Motivation & Architectural Concepts
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../comparison/" title="Comparison with other frameworks" class="md-nav__link">
+      Comparison with other frameworks
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../implementation/" title="Under the Hood: Implementation Notes" class="md-nav__link">
+      Under the Hood: Implementation Notes
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-3" type="checkbox" id="nav-3">
+    
+    <label class="md-nav__link" for="nav-3">
+      Tutorials & Samples
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-3">
+        Tutorials & Samples
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-3-1" type="checkbox" id="nav-3-1">
+    
+    <label class="md-nav__link" for="nav-3-1">
+      Tutorial
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="2">
+      <label class="md-nav__title" for="nav-3-1">
+        Tutorial
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../tutorial/" title="Overview" class="md-nav__link">
+      Overview
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../tutorial/adding-workflow-to-a-project/" title="Adding Workflow to a project" class="md-nav__link">
+      Adding Workflow to a project
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../tutorial/tooling/" title="Tooling" class="md-nav__link">
+      Tooling
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../tutorial/building-a-workflow/" title="Building a Workflow" class="md-nav__link">
+      Building a Workflow
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../tutorial/building-a-view-controller-from-screen/" title="Building a View Controller from a Screen" class="md-nav__link">
+      Building a View Controller from a Screen
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../tutorial/using-a-workflow-for-ui/" title="Using a Workflow to Show UI" class="md-nav__link">
+      Using a Workflow to Show UI
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../code-recipes/" title="Code Recipes" class="md-nav__link">
+      Code Recipes
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../development-process/" title="Development Process" class="md-nav__link">
+      Development Process
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-4" type="checkbox" id="nav-4">
+    
+    <label class="md-nav__link" for="nav-4">
+      API Reference
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-4">
+        API Reference
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../kotlin/api/workflow/" title="Kotlin" class="md-nav__link">
+      Kotlin
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-4-2" type="checkbox" id="nav-4-2">
+    
+    <label class="md-nav__link" for="nav-4-2">
+      Swift API
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="2">
+      <label class="md-nav__title" for="nav-4-2">
+        Swift API
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../swift/api/Workflow/" title="Workflow" class="md-nav__link">
+      Workflow 
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../swift/api/WorkflowUI/" title="WorkflowUI" class="md-nav__link">
+      WorkflowUI 
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../swift/api/WorkflowTesting/" title="WorkflowTesting" class="md-nav__link">
+      WorkflowTesting 
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../../faq/" title="FAQ" class="md-nav__link">
+      FAQ
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../../CHANGELOG/" title="Change Log ⏏" class="md-nav__link">
+      Change Log ⏏
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../../CONTRIBUTING/" title="Contributing" class="md-nav__link">
+      Contributing
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../../CODE_OF_CONDUCT/" title="Code of Conduct" class="md-nav__link">
+      Code of Conduct
+    </a>
+  </li>
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="toc">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+<nav class="md-nav md-nav--secondary">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">Table of contents</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#the-role-of-a-workflow" class="md-nav__link">
+    The Role of a Workflow
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#workflows-have-state" class="md-nav__link">
+    Workflows have state
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#private-state" class="md-nav__link">
+    Private state
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#props" class="md-nav__link">
+    Props
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#workflows-are-advanced-by-workflowactions" class="md-nav__link">
+    Workflows are advanced by WorkflowActions
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#workflows-can-emit-output-events-up-the-hierarchy-to-their-parent" class="md-nav__link">
+    Workflows can emit output events up the hierarchy to their parent
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#workflows-produce-an-external-representation-of-their-state-via-rendering" class="md-nav__link">
+    Workflows produce an external representation of their state via Rendering
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#workflows-can-respond-to-ui-events" class="md-nav__link">
+    Workflows can respond to UI events
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#workflows-form-a-hierarchy-they-may-have-children" class="md-nav__link">
+    Workflows form a hierarchy (they may have children)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#workflows-can-subscribe-to-external-event-sources" class="md-nav__link">
+    Workflows can subscribe to external event sources
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#workflows-can-perform-asynchronous-tasks-workers" class="md-nav__link">
+    Workflows can perform asynchronous tasks (Workers)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#workflows-can-be-saved-to-and-restored-from-a-snapshot-kotlin-only" class="md-nav__link">
+    Workflows can be saved to and restored from a snapshot (Kotlin only)
+  </a>
+  
+</li>
+      
+      
+      
+      
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content">
+            <article class="md-content__inner md-typeset">
+              
+                
+                  <a href="https://github.com/square/workflow/edit/master/docs/userguide/core-workflow.md" title="Edit this page" class="md-icon md-content__icon">&#xE3C9;</a>
+                
+                
+                <h1 id="workflow-core-workflow">Workflow Core: Workflow<a class="headerlink" href="#workflow-core-workflow" title="Permanent link">&para;</a></h1>
+<h2 id="the-role-of-a-workflow">The Role of a Workflow<a class="headerlink" href="#the-role-of-a-workflow" title="Permanent link">&para;</a></h2>
+<p><code>Workflow</code> is a protocol (in Swift) and interface (in Kotlin) that defines the contract for a single
+node in the workflow hierarchy.</p>
+<div class="superfences-tabs">
+<input name="__tabs_1" type="radio" id="__tab_1_0" checked="checked" />
+<label for="__tab_1_0">Swift</label>
+<div class="superfences-content"><table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="kd">public</span> <span class="kd">protocol</span> <span class="nc">Workflow</span><span class="p">:</span> <span class="n">AnyWorkflowConvertible</span> <span class="p">{</span>
+
+    <span class="n">associatedtype</span> <span class="n">State</span>
+
+    <span class="n">associatedtype</span> <span class="n">Output</span> <span class="p">=</span> <span class="n">Never</span>
+
+    <span class="n">associatedtype</span> <span class="n">Rendering</span>
+
+    <span class="kd">func</span> <span class="nf">makeInitialState</span><span class="p">()</span> <span class="p">-&gt;</span> <span class="n">State</span>
+
+    <span class="kd">func</span> <span class="nf">workflowDidChange</span><span class="p">(</span><span class="n">from</span> <span class="n">previousWorkflow</span><span class="p">:</span> <span class="kc">Self</span><span class="p">,</span> <span class="n">state</span><span class="p">:</span> <span class="kr">inout</span> <span class="n">State</span><span class="p">)</span>
+
+    <span class="kd">func</span> <span class="nf">render</span><span class="p">(</span><span class="n">state</span><span class="p">:</span> <span class="n">State</span><span class="p">,</span> <span class="n">context</span><span class="p">:</span> <span class="n">RenderContext</span><span class="p">&lt;</span><span class="kc">Self</span><span class="p">&gt;)</span> <span class="p">-&gt;</span> <span class="n">Rendering</span>
+
+<span class="p">}</span>
+</code></pre></div>
+</td></tr></table></div>
+<input name="__tabs_1" type="radio" id="__tab_1_1" />
+<label for="__tab_1_1">Kotlin</label>
+<div class="superfences-content"><table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="k">abstract</span> <span class="k">class</span> <span class="nc">StatefulWorkflow</span><span class="p">&lt;</span><span class="k">in</span> <span class="n">PropsT</span><span class="p">,</span> <span class="n">StateT</span><span class="p">,</span> <span class="k">out</span> <span class="n">OutputT</span> <span class="p">:</span> <span class="n">Any</span><span class="p">,</span> <span class="k">out</span> <span class="n">RenderingT</span><span class="p">&gt;</span> <span class="p">:</span> <span class="n">Workflow</span><span class="p">&lt;</span><span class="n">PropsT</span><span class="p">,</span> <span class="n">OutputT</span><span class="p">,</span> <span class="n">RenderingT</span><span class="p">&gt;</span> <span class="p">{</span>
+
+  <span class="k">abstract</span> <span class="k">fun</span> <span class="nf">initialState</span><span class="p">(</span>
+    <span class="n">props</span><span class="p">:</span> <span class="n">PropsT</span><span class="p">,</span>
+    <span class="n">initialSnapshot</span><span class="p">:</span> <span class="n">Snapshot</span><span class="p">?</span>
+  <span class="p">):</span> <span class="n">StateT</span>
+
+  <span class="k">open</span> <span class="k">fun</span> <span class="nf">onPropsChanged</span><span class="p">(</span>
+    <span class="n">old</span><span class="p">:</span> <span class="n">PropsT</span><span class="p">,</span>
+    <span class="n">new</span><span class="p">:</span> <span class="n">PropsT</span><span class="p">,</span>
+    <span class="n">state</span><span class="p">:</span> <span class="n">StateT</span>
+  <span class="p">):</span> <span class="n">StateT</span> <span class="p">=</span> <span class="n">state</span>
+
+  <span class="k">abstract</span> <span class="k">fun</span> <span class="nf">render</span><span class="p">(</span>
+    <span class="n">props</span><span class="p">:</span> <span class="n">PropsT</span><span class="p">,</span>
+    <span class="n">state</span><span class="p">:</span> <span class="n">StateT</span><span class="p">,</span>
+    <span class="n">context</span><span class="p">:</span> <span class="n">RenderContext</span><span class="p">&lt;</span><span class="n">StateT</span><span class="p">,</span> <span class="n">OutputT</span><span class="p">&gt;</span>
+  <span class="p">):</span> <span class="n">RenderingT</span>
+
+  <span class="k">abstract</span> <span class="k">fun</span> <span class="nf">snapshotState</span><span class="p">(</span><span class="n">state</span><span class="p">:</span> <span class="n">StateT</span><span class="p">):</span> <span class="n">Snapshot</span>
+<span class="p">}</span>
+</code></pre></div>
+</td></tr></table></div>
+</div>
+<details class="faq"><summary>Swift: What is <code>AnyWorkflowConvertible</code>?</summary><p>When a protocol has an associated <code>Self</code> type, Swift requires the use of a <a href="https://medium.com/swiftworld/swift-world-type-erasure-5b720bc0318a">type-erasing wrapper</a>
+to store references to instances of that protocol.
+<a href="/workflow/swift/api/Workflow/Structs/AnyWorkflow.html"><code>AnyWorkflow</code></a> is such a wrapper for
+<code>Workflow</code>. <a href="/workflow/swift/api/Workflow/Protocols/AnyWorkflowConvertible.html"><code>AnyWorkflowConvertible</code></a>
+is a protocol with a single method that returns an <code>AnyWorkflow</code>. It is useful as a base type
+because it allows instances of <code>Workflow</code> to be used directly by any code that requires the
+type-erased <code>AnyWorkflow</code>.</p>
+</details>
+<details class="faq"><summary>Kotlin: <code>StatefulWorkflow</code> vs <code>Workflow</code></summary><p>It is a common practice in Kotlin to divide types into two parts: an interface for public API,
+and a class for private implementation. The Workflow library defines a <a href="/workflow/kotlin/api/workflow-core/com.squareup.workflow/-workflow/"><code>Workflow</code></a>
+interface, which should be used as the type of properties and parameters by code that needs to
+refer to a particular <code>Workflow</code> interface. The <code>Workflow</code> interface contains a single method,
+which simply returns a <code>StatefulWorkflow</code> – a <code>Workflow</code> can be described as “anything that can
+be expressed as a <code>StatefulWorkflow</code>.”</p>
+<p>The library also defines two abstract classes which define the contract for workflows and should
+be subclassed to implement your workflows:</p>
+<ul>
+<li><a href="/workflow/kotlin/api/workflow-core/com.squareup.workflow/-stateful-workflow/"><strong><code>StatefulWorkflow</code></strong></a>
+  should be subclassed to implement Workflows that have <a href="#private-state">private state</a>.</li>
+<li><a href="/workflow/kotlin/api/workflow-core/com.squareup.workflow/-stateless-workflow/"><strong><code>StatelessWorkflow</code></strong></a>
+  should be subclassed to implement Workflows that <em>don&rsquo;t</em> have any private state. See <a href="#stateless-workflows">Stateless Workflows</a>.</li>
+</ul>
+</details>
+<p>Workflows have several responsibilities:</p>
+<h2 id="workflows-have-state">Workflows have state<a class="headerlink" href="#workflows-have-state" title="Permanent link">&para;</a></h2>
+<p>Once a Workflow has been started, it always operates in the context of some state. This state is
+divided into two parts: private state, which only the Workflow implementation itself knows about,
+which is defined by the <code>State</code> type, and properties (or &ldquo;props&rdquo;), which is passed to the Workflow
+from its parent (more on hierarchical workflows below).</p>
+<h3 id="private-state">Private state<a class="headerlink" href="#private-state" title="Permanent link">&para;</a></h3>
+<p>Every Workflow implementation defines a <code>State</code> type to maintain any necessary state while the
+workflow is running.</p>
+<p>For example, a tic-tac-toe game might have a state like this:</p>
+<div class="superfences-tabs">
+<input name="__tabs_2" type="radio" id="__tab_2_0" checked="checked" />
+<label for="__tab_2_0">Swift</label>
+<div class="superfences-content"><table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="kd">struct</span> <span class="nc">State</span> <span class="p">{</span>
+
+    <span class="kd">enum</span> <span class="nc">Player</span> <span class="p">{</span>
+        <span class="k">case</span> <span class="n">x</span>
+        <span class="k">case</span> <span class="n">o</span>
+    <span class="p">}</span>
+
+    <span class="kd">enum</span> <span class="nc">Space</span> <span class="p">{</span>
+        <span class="k">case</span> <span class="n">unfilled</span>
+        <span class="n">filled</span><span class="p">(</span><span class="n">Player</span><span class="p">)</span>
+    <span class="p">}</span>
+
+    <span class="c1">// 3 rows * 3 columns = 9 spaces</span>
+    <span class="kd">var</span> <span class="nv">spaces</span><span class="p">:</span> <span class="p">[</span><span class="n">Space</span><span class="p">]</span> <span class="p">=</span> <span class="nb">Array</span><span class="p">(</span><span class="n">repeating</span><span class="p">:</span> <span class="p">.</span><span class="n">unfilled</span><span class="p">,</span> <span class="bp">count</span><span class="p">:</span> <span class="mi">9</span><span class="p">)</span>
+    <span class="kd">var</span> <span class="nv">currentTurn</span><span class="p">:</span> <span class="n">Player</span> <span class="p">=</span> <span class="p">.</span><span class="n">x</span>
+<span class="p">}</span>
+</code></pre></div>
+</td></tr></table></div>
+<input name="__tabs_2" type="radio" id="__tab_2_1" />
+<label for="__tab_2_1">Kotlin</label>
+<div class="superfences-content"><table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="k">data</span> <span class="k">class</span> <span class="nc">State</span><span class="p">(</span>
+  <span class="c1">// 3 rows * 3 columns = 9 spaces</span>
+  <span class="k">val</span> <span class="py">spaces</span><span class="p">:</span> <span class="n">List</span><span class="p">&lt;</span><span class="n">Space</span><span class="p">&gt;</span> <span class="p">=</span> <span class="n">List</span><span class="p">(</span><span class="m">9</span><span class="p">)</span> <span class="p">{</span> <span class="n">Unfilled</span> <span class="p">},</span>
+  <span class="k">val</span> <span class="py">currentTurn</span><span class="p">:</span> <span class="n">Player</span> <span class="p">=</span> <span class="n">X</span>
+<span class="p">)</span> <span class="p">{</span>
+
+  <span class="k">enum</span> <span class="k">class</span> <span class="nc">Player</span> <span class="p">{</span>
+    <span class="n">X</span><span class="p">,</span> <span class="n">O</span>
+  <span class="p">}</span>
+
+  <span class="k">sealed</span> <span class="k">class</span> <span class="nc">Space</span> <span class="p">{</span>
+    <span class="k">object</span> <span class="nc">Unfilled</span> <span class="p">:</span> <span class="n">Space</span><span class="p">()</span>
+    <span class="k">data</span> <span class="k">class</span> <span class="nc">Filled</span><span class="p">(</span><span class="k">val</span> <span class="py">player</span><span class="p">:</span> <span class="n">Player</span><span class="p">)</span> <span class="p">:</span> <span class="n">Space</span><span class="p">()</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+</td></tr></table></div>
+</div>
+<p>When the workflow is first started, it is queried for an initial state value. From that point
+forward, the workflow may advance to a new state as the result of events occurring from various
+sources (which will be covered below).</p>
+<div class="admonition info">
+<p class="admonition-title">Stateless Workflows</p>
+<p>If a workflow does not have any private state, it is often referred to as a
+&ldquo;stateless workflow&rdquo;. A stateless Workflow is simply a Workflow that has a <code>Void</code> or <code>Unit</code>
+<code>State</code> type. See more <a href="#stateless-workflows">below</a>.</p>
+</div>
+<h3 id="props">Props<a class="headerlink" href="#props" title="Permanent link">&para;</a></h3>
+<p>Every Workflow implementation also defines data that is passed into it. The Workflow is not able to
+modify this state itself, but it may change between render passes. This public state is called
+<code>Props</code>.</p>
+<p>In Swift, the props are simply defined as properties of the struct implementing Workflow itself. In
+Kotlin, the <code>Workflow</code> interface defines a separate <code>PropsT</code> type parameter. (This additional type
+parameter is necessary due to Kotlin’s lack of the <code>Self</code> type that Swift workflow’s
+<code>workflowDidChange</code> method relies upon.)</p>
+<div class="superfences-tabs">
+<input name="__tabs_3" type="radio" id="__tab_3_0" checked="checked" />
+<label for="__tab_3_0">Swift</label>
+<div class="superfences-content"><table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">TK</span>
+</code></pre></div>
+</td></tr></table></div>
+<input name="__tabs_3" type="radio" id="__tab_3_1" />
+<label for="__tab_3_1">Kotlin</label>
+<div class="superfences-content"><table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span>1
+2
+3
+4</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="k">data</span> <span class="k">class</span> <span class="nc">Props</span><span class="p">(</span>
+  <span class="k">val</span> <span class="py">playerXName</span><span class="p">:</span> <span class="n">String</span>
+  <span class="k">val</span> <span class="py">playerOName</span><span class="p">:</span> <span class="n">String</span>
+<span class="p">)</span>
+</code></pre></div>
+</td></tr></table></div>
+</div>
+<h2 id="workflows-are-advanced-by-workflowactions">Workflows are advanced by <code>WorkflowAction</code>s<a class="headerlink" href="#workflows-are-advanced-by-workflowactions" title="Permanent link">&para;</a></h2>
+<p>Any time something happens that should advance a workflow – a UI event, a network response, a
+child&rsquo;s output event – actions are used to perform the update. For example, a workflow may respond
+to UI events by mapping those events into a type conforming to/implementing <code>WorkflowAction</code>. These
+types implement the logic to advance a workflow by:</p>
+<ul>
+<li>Advancing to a new state</li>
+<li>(Optionally) emitting an output event up the tree.</li>
+</ul>
+<p><code>WorkflowAction</code>s are typically defined as enums with associated types (Swift) or sealed classes
+(Kotlin), and can include data from the event – for example, the ID of the item in the list that was
+clicked.</p>
+<p>Side effects such as logging button clicks to an analytics framework are also typically performed in
+actions.</p>
+<p>If you&rsquo;re familiar with React/Redux, <code>WorkflowAction</code>s are essentially reducers.</p>
+<h2 id="workflows-can-emit-output-events-up-the-hierarchy-to-their-parent">Workflows can emit output events up the hierarchy to their parent<a class="headerlink" href="#workflows-can-emit-output-events-up-the-hierarchy-to-their-parent" title="Permanent link">&para;</a></h2>
+<p>When a workflow is advanced by an action, an optional output event can be sent up the workflow
+hierarchy. This is the opportunity for a workflow to notify its parent that something has happened
+(and the parent&rsquo;s opportunity to respond to that event by dispatching its own action, continuing up
+the tree as long as output events are emitted).</p>
+<h2 id="workflows-produce-an-external-representation-of-their-state-via-rendering">Workflows produce an external representation of their state via <code>Rendering</code><a class="headerlink" href="#workflows-produce-an-external-representation-of-their-state-via-rendering" title="Permanent link">&para;</a></h2>
+<p>Immediately after starting up, or after a state transition occurs, a workflow will have its <code>render</code>
+method called. This method is responsible for creating and returning a value of type <code>Rendering</code>.
+You can think of <code>Rendering</code> as the &ldquo;external published state&rdquo; of the workflow, and the <code>render</code>
+function as a map of (<code>Props</code> + <code>State</code> + childrens&rsquo; <code>Rendering</code>s) -&gt; <code>Rendering</code>. While a
+workflow&rsquo;s internal state may contain more detailed or comprehensive state, the <code>Rendering</code>
+(external state) is a type that is useful outside of the workflow. Because a workflow’s render
+method may be called by infrastructure for a variety of reasons, it’s important to not perform side
+effects when rendering — render methods must be idempotent. Event-based side effects should use
+Actions and state-based side effects should use Workers.</p>
+<p>When building an interactive application, the <code>Rendering</code> type is commonly (but not always) a view
+model that will drive the UI layer.</p>
+<h2 id="workflows-can-respond-to-ui-events">Workflows can respond to UI events<a class="headerlink" href="#workflows-can-respond-to-ui-events" title="Permanent link">&para;</a></h2>
+<p>The <code>RenderContext</code> that is passed into <code>render</code> as the last parameter provides some useful tools to
+assist in creating the <code>Rendering</code> value.</p>
+<p>If a workflow is producing a view model, it is common to need an event handler to respond to UI
+events. The <code>RenderContext</code> has API to create an event handler, called a <code>Sink</code>, that when called
+will advance the workflow by dispatching an action back to the workflow (for more on actions, see
+<a href="#workflows-are-advanced-by-actions">below</a>).</p>
+<div class="superfences-tabs">
+<input name="__tabs_4" type="radio" id="__tab_4_0" checked="checked" />
+<label for="__tab_4_0">Swift</label>
+<div class="superfences-content"><table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span>1
+2
+3
+4
+5
+6
+7
+8</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="kd">func</span> <span class="nf">render</span><span class="p">(</span><span class="n">state</span><span class="p">:</span> <span class="n">State</span><span class="p">,</span> <span class="n">context</span><span class="p">:</span> <span class="n">RenderContext</span><span class="p">&lt;</span><span class="n">DemoWorkflow</span><span class="p">&gt;)</span> <span class="p">-&gt;</span> <span class="n">DemoScreen</span> <span class="p">{</span>
+    <span class="c1">// Create a sink of our Action type so we can send actions back to the workflow.</span>
+    <span class="kd">let</span> <span class="nv">sink</span> <span class="p">=</span> <span class="n">context</span><span class="p">.</span><span class="n">makeSink</span><span class="p">(</span><span class="n">of</span><span class="p">:</span> <span class="n">Action</span><span class="p">.</span><span class="kc">self</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">DemoScreen</span><span class="p">(</span>
+        <span class="n">title</span><span class="p">:</span> <span class="s">&quot;A nice title&quot;</span><span class="p">,</span>
+        <span class="n">onTap</span><span class="p">:</span> <span class="p">{</span> <span class="n">sink</span><span class="p">.</span><span class="n">send</span><span class="p">(</span><span class="n">Action</span><span class="p">.</span><span class="n">refreshButtonTapped</span><span class="p">)</span> <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+</td></tr></table></div>
+<input name="__tabs_4" type="radio" id="__tab_4_1" />
+<label for="__tab_4_1">Kotlin</label>
+<div class="superfences-content"><table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">TK</span>
+</code></pre></div>
+</td></tr></table></div>
+</div>
+<h2 id="workflows-form-a-hierarchy-they-may-have-children">Workflows form a hierarchy (they may have children)<a class="headerlink" href="#workflows-form-a-hierarchy-they-may-have-children" title="Permanent link">&para;</a></h2>
+<p>As they produce a <code>Rendering</code> value, it is common for workflows to delegate some portion of that
+work to a <em>child workflow</em>. This is done via the <code>RenderContext</code> that is passed into the <code>render</code>
+method. In order to delegate to a child, the parent calls <code>renderChild</code> on the context, with the
+child workflow as the single argument. The infrastructure will spin up the child workflow (including
+initializing its initial state) if this is the first time this child has been used, or, if the child
+was also used on the previous <code>render</code> pass, the existing child will be updated. Either way,
+<code>render</code> will immediately be called on the child (by the Workflow infrastructure), and the resulting
+child&rsquo;s <code>Rendering</code> value will be returned to the parent.</p>
+<p>This allows a parent to return complex <code>Rendering</code> types (such as a view model representing the
+entire UI state of an application) without needing to model all of that complexity within a single
+workflow.</p>
+<div class="admonition info">
+<p class="admonition-title">Workflow Identity</p>
+<p>The Workflow infrastructure automatically detects the first time and the last subsequent time
+you&rsquo;ve asked to render a child workflow, and will automatically initialize the child and clean
+it up. In both Swift and Kotlin, this is done using the workflow&rsquo;s concrete type. Both languages
+use reflection to do this comparison (e.g. in Kotlin, the workflows&rsquo; <code>KClass</code>es are compared).</p>
+<p>It is an error to render workflows of the same type more than once in the same render pass.
+Since type is used for workflow identity, the child rendering APIs take an optional string key
+to differentiate between multiple child workflows of the same type.</p>
+</div>
+<h2 id="workflows-can-subscribe-to-external-event-sources">Workflows can subscribe to external event sources<a class="headerlink" href="#workflows-can-subscribe-to-external-event-sources" title="Permanent link">&para;</a></h2>
+<p>If a workflow needs to respond to some external event source (e.g. push notifications), the workflow
+can ask the context to listen to those events from within the <code>render</code> method.</p>
+<div class="admonition info">
+<p class="admonition-title">Swift vs Kotlin</p>
+<p>In the Swift library, there is a special API for subscribing to hot streams (<code>Signal</code> in
+ReactiveSwift). The Kotlin library does not have any special API for subscribing to hot streams
+(channels), though it does have extension methods to convert <a href="https://kotlin.github.io/kotlinx.coroutines/kotlinx-coroutines-core/kotlinx.coroutines.channels/-receive-channel/"><code>ReceiveChannel</code>s</a>,
+and RxJava <code>Flowable</code>s and <code>Observables</code>, to <a href="#worker"><code>Worker</code>s</a>. The reason for this
+discrepancy is simply that we don&rsquo;t have any uses of channels yet in production, and so we&rsquo;ve
+decided to keep the API simpler. If we start using channels in the future, it may make sense to
+make subscribing to them a first-class API like in Swift.</p>
+</div>
+<h2 id="workflows-can-perform-asynchronous-tasks-workers">Workflows can perform asynchronous tasks (Workers)<a class="headerlink" href="#workflows-can-perform-asynchronous-tasks-workers" title="Permanent link">&para;</a></h2>
+<p><code>Workers</code> are very similar in concept to child workflows. Unlike child workflows, however, workers
+do not have a <code>Rendering</code> type; they only exist to perform a single asynchronous task before sending
+zero or more output events back up the tree to their parent.</p>
+<p>For more information about workers, see the <a href="#worker">Worker</a> section below.</p>
+<h2 id="workflows-can-be-saved-to-and-restored-from-a-snapshot-kotlin-only">Workflows can be saved to and restored from a snapshot (Kotlin only)<a class="headerlink" href="#workflows-can-be-saved-to-and-restored-from-a-snapshot-kotlin-only" title="Permanent link">&para;</a></h2>
+<p>On every render pass, each workflow is asked to create a &ldquo;snapshot&rdquo; of its state – a lazily-produced
+serialization of the workflow&rsquo;s <code>State</code> as a binary blob. These <code>Snapshot</code>s are aggregated into a
+single <code>Snapshot</code> for the entire workflow tree and emitted along with the root workflow&rsquo;s
+<code>Rendering</code>. When the workflow runtime is started, it can be passed an optional <code>Snapshot</code> to
+restore the tree from. When non-null, the root workflow&rsquo;s snapshot is extracted and passed to the
+root workflow&rsquo;s <code>initialState</code>. The workflow can choose to either ignore the snapshot or use it to
+restore its <code>State</code>. On the first render pass, if the root workflow renders any children that were
+also being rendered when the snapshot was taken, those children&rsquo;s snapshots are also extracted from
+the aggregate and used to initialize their states.</p>
+<p>!!! faq Why don&rsquo;t Swift Workflows support snapshotting?
+    Snapshotting was built into Kotlin workflows specifically to support Android&rsquo;s app lifecycle,
+    which requires apps to serialize their current state before being backgrounded so that they can
+    be restored in case the system needs to kill the hosting process. iOS apps don&rsquo;t have this
+    requirement, so the Swift library doesn&rsquo;t need to support it.</p>
+                
+                  
+                
+                
+              
+              
+                
+
+
+              
+            </article>
+          </div>
+        </div>
+      </main>
+      
+        
+<footer class="md-footer">
+  
+    <div class="md-footer-nav">
+      <nav class="md-footer-nav__inner md-grid">
+        
+          <a href="../concepts/" title="Core Concepts" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+            <div class="md-flex__cell md-flex__cell--shrink">
+              <i class="md-icon md-icon--arrow-back md-footer-nav__button"></i>
+            </div>
+            <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
+              <span class="md-flex__ellipsis">
+                <span class="md-footer-nav__direction">
+                  Previous
+                </span>
+                Core Concepts
+              </span>
+            </div>
+          </a>
+        
+        
+          <a href="../core-worker/" title="Worker" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
+            <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
+              <span class="md-flex__ellipsis">
+                <span class="md-footer-nav__direction">
+                  Next
+                </span>
+                Worker
+              </span>
+            </div>
+            <div class="md-flex__cell md-flex__cell--shrink">
+              <i class="md-icon md-icon--arrow-forward md-footer-nav__button"></i>
+            </div>
+          </a>
+        
+      </nav>
+    </div>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-footer-copyright">
+        
+          <div class="md-footer-copyright__highlight">
+            Copyright &copy; 2019 Square, Inc.
+          </div>
+        
+        powered by
+        <a href="https://www.mkdocs.org" target="_blank" rel="noopener">MkDocs</a>
+        and
+        <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+          Material for MkDocs</a>
+      </div>
+      
+  <div class="md-footer-social">
+    <link rel="stylesheet" href="../../assets/fonts/font-awesome.css">
+    
+      <a href="https://square.github.io/" target="_blank" rel="noopener" title="globe" class="md-footer-social__link fa fa-globe"></a>
+    
+      <a href="https://github.com/square" target="_blank" rel="noopener" title="github-alt" class="md-footer-social__link fa fa-github-alt"></a>
+    
+      <a href="https://twitter.com/squareeng" target="_blank" rel="noopener" title="twitter" class="md-footer-social__link fa fa-twitter"></a>
+    
+      <a href="https://www.linkedin.com/company/joinsquare/" target="_blank" rel="noopener" title="linkedin" class="md-footer-social__link fa fa-linkedin"></a>
+    
+  </div>
+
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    
+      <script src="../../assets/javascripts/application.c33a9706.js"></script>
+      
+      <script>app.initialize({version:"1.1",url:{base:"../.."}})</script>
+      
+    
+  </body>
+</html>

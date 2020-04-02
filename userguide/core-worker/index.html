@@ -1,0 +1,1093 @@
+
+
+
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      <meta http-equiv="x-ua-compatible" content="ie=edge">
+      
+        <meta name="description" content="A library for making composable state machines, and UIs driven by those state machines.">
+      
+      
+        <link rel="canonical" href="https://square.github.io/workflow/userguide/core-worker/">
+      
+      
+        <meta name="author" content="Square, Inc.">
+      
+      
+        <meta name="lang:clipboard.copy" content="Copy to clipboard">
+      
+        <meta name="lang:clipboard.copied" content="Copied to clipboard">
+      
+        <meta name="lang:search.language" content="en">
+      
+        <meta name="lang:search.pipeline.stopwords" content="True">
+      
+        <meta name="lang:search.pipeline.trimmer" content="True">
+      
+        <meta name="lang:search.result.none" content="No matching documents">
+      
+        <meta name="lang:search.result.one" content="1 matching document">
+      
+        <meta name="lang:search.result.other" content="# matching documents">
+      
+        <meta name="lang:search.tokenizer" content="[\s\-]+">
+      
+      <link rel="shortcut icon" href="../../images/icon-square.png">
+      <meta name="generator" content="mkdocs-1.1, mkdocs-material-4.6.3">
+    
+    
+      
+        <title>Worker - Workflow</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/application.adb8469c.css">
+      
+        <link rel="stylesheet" href="../../assets/stylesheets/application-palette.a8b3c06d.css">
+      
+      
+        
+        
+        <meta name="theme-color" content="#ef5350">
+      
+    
+    
+      <script src="../../assets/javascripts/modernizr.86422ebf.js"></script>
+    
+    
+      
+        <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&display=fallback">
+        <style>body,input{font-family:"Roboto","Helvetica Neue",Helvetica,Arial,sans-serif}code,kbd,pre{font-family:"Roboto Mono","Courier New",Courier,monospace}</style>
+      
+    
+    <link rel="stylesheet" href="../../assets/fonts/material-icons.css">
+    
+    
+      <link rel="stylesheet" href="../../css/app.css">
+    
+    
+      
+        
+<script>
+  window.ga = window.ga || function() {
+    (ga.q = ga.q || []).push(arguments)
+  }
+  ga.l = +new Date
+  /* Setup integration and send page view */
+  ga("create", "UA-144488214-1", "auto")
+  ga("set", "anonymizeIp", true)
+  ga("send", "pageview")
+  /* Register handler to log search on blur */
+  document.addEventListener("DOMContentLoaded", () => {
+    if (document.forms.search) {
+      var query = document.forms.search.query
+      query.addEventListener("blur", function() {
+        if (this.value) {
+          var path = document.location.pathname;
+          ga("send", "pageview", path + "?q=" + this.value)
+        }
+      })
+    }
+  })
+</script>
+<script async src="https://www.google-analytics.com/analytics.js"></script>
+      
+    
+    
+  </head>
+  
+    
+    
+    <body dir="ltr" data-md-color-primary="red" data-md-color-accent="pink">
+  
+    <svg class="md-svg">
+      <defs>
+        
+        
+          <svg xmlns="http://www.w3.org/2000/svg" width="416" height="448" viewBox="0 0 416 448" id="__github"><path fill="currentColor" d="M160 304q0 10-3.125 20.5t-10.75 19T128 352t-18.125-8.5-10.75-19T96 304t3.125-20.5 10.75-19T128 256t18.125 8.5 10.75 19T160 304zm160 0q0 10-3.125 20.5t-10.75 19T288 352t-18.125-8.5-10.75-19T256 304t3.125-20.5 10.75-19T288 256t18.125 8.5 10.75 19T320 304zm40 0q0-30-17.25-51T296 232q-10.25 0-48.75 5.25Q229.5 240 208 240t-39.25-2.75Q130.75 232 120 232q-29.5 0-46.75 21T56 304q0 22 8 38.375t20.25 25.75 30.5 15 35 7.375 37.25 1.75h42q20.5 0 37.25-1.75t35-7.375 30.5-15 20.25-25.75T360 304zm56-44q0 51.75-15.25 82.75-9.5 19.25-26.375 33.25t-35.25 21.5-42.5 11.875-42.875 5.5T212 416q-19.5 0-35.5-.75t-36.875-3.125-38.125-7.5-34.25-12.875T37 371.5t-21.5-28.75Q0 312 0 260q0-59.25 34-99-6.75-20.5-6.75-42.5 0-29 12.75-54.5 27 0 47.5 9.875t47.25 30.875Q171.5 96 212 96q37 0 70 8 26.25-20.5 46.75-30.25T376 64q12.75 25.5 12.75 54.5 0 21.75-6.75 42 34 40 34 99.5z"/></svg>
+        
+      </defs>
+    </svg>
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" data-md-component="overlay" for="__drawer"></label>
+    
+      <a href="#workflow-core-worker" tabindex="0" class="md-skip">
+        Skip to content
+      </a>
+    
+    
+      <header class="md-header" data-md-component="header">
+  <nav class="md-header-nav md-grid">
+    <div class="md-flex">
+      <div class="md-flex__cell md-flex__cell--shrink">
+        <a href="https://square.github.io/workflow/" title="Workflow" aria-label="Workflow" class="md-header-nav__button md-logo">
+          
+            <img alt="logo" src="../../images/icon-square.png" width="24" height="24">
+          
+        </a>
+      </div>
+      <div class="md-flex__cell md-flex__cell--shrink">
+        <label class="md-icon md-icon--menu md-header-nav__button" for="__drawer"></label>
+      </div>
+      <div class="md-flex__cell md-flex__cell--stretch">
+        <div class="md-flex__ellipsis md-header-nav__title" data-md-component="title">
+          
+            <span class="md-header-nav__topic">
+              Workflow
+            </span>
+            <span class="md-header-nav__topic">
+              
+                Worker
+              
+            </span>
+          
+        </div>
+      </div>
+      <div class="md-flex__cell md-flex__cell--shrink">
+        
+      </div>
+      
+        <div class="md-flex__cell md-flex__cell--shrink">
+          <div class="md-header-nav__source">
+            
+
+
+  
+
+<a href="https://github.com/square/workflow/" title="Go to repository" class="md-source" data-md-source="github">
+  
+    <div class="md-source__icon">
+      <svg viewBox="0 0 24 24" width="24" height="24">
+        <use xlink:href="#__github" width="24" height="24"></use>
+      </svg>
+    </div>
+  
+  <div class="md-source__repository">
+    Workflow
+  </div>
+</a>
+          </div>
+        </div>
+      
+    </div>
+  </nav>
+</header>
+    
+    <div class="md-container">
+      
+        
+      
+      
+        
+
+  
+
+<nav class="md-tabs md-tabs--active" data-md-component="tabs">
+  <div class="md-tabs__inner md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  <li class="md-tabs__item">
+    
+      <a href="../.." class="md-tabs__link">
+        Overview
+      </a>
+    
+  </li>
+
+      
+        
+  
+  
+    <li class="md-tabs__item">
+      
+        <a href="../concepts/" class="md-tabs__link md-tabs__link--active">
+          User Guide
+        </a>
+      
+    </li>
+  
+
+      
+        
+  
+  
+    
+    
+  
+  
+    <li class="md-tabs__item">
+      
+        <a href="../../tutorial/" class="md-tabs__link">
+          Tutorials & Samples
+        </a>
+      
+    </li>
+  
+
+  
+
+      
+        
+  
+  
+    <li class="md-tabs__item">
+      
+        <a href="../../kotlin/api/workflow/" class="md-tabs__link">
+          API Reference
+        </a>
+      
+    </li>
+  
+
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    </ul>
+  </div>
+</nav>
+      
+      <main class="md-main" role="main">
+        <div class="md-main__inner md-grid" data-md-component="container">
+          
+            
+              <div class="md-sidebar md-sidebar--primary" data-md-component="navigation">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    <nav class="md-nav md-nav--primary" data-md-level="0">
+  <label class="md-nav__title md-nav__title--site" for="__drawer">
+    <a href="https://square.github.io/workflow/" title="Workflow" class="md-nav__button md-logo">
+      
+        <img alt="logo" src="../../images/icon-square.png" width="48" height="48">
+      
+    </a>
+    Workflow
+  </label>
+  
+    <div class="md-nav__source">
+      
+
+
+  
+
+<a href="https://github.com/square/workflow/" title="Go to repository" class="md-source" data-md-source="github">
+  
+    <div class="md-source__icon">
+      <svg viewBox="0 0 24 24" width="24" height="24">
+        <use xlink:href="#__github" width="24" height="24"></use>
+      </svg>
+    </div>
+  
+  <div class="md-source__repository">
+    Workflow
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../.." title="Overview" class="md-nav__link">
+      Overview
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-2" type="checkbox" id="nav-2" checked>
+    
+    <label class="md-nav__link" for="nav-2">
+      User Guide
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-2">
+        User Guide
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../concepts/" title="Core Concepts" class="md-nav__link">
+      Core Concepts
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-2-2" type="checkbox" id="nav-2-2" checked>
+    
+    <label class="md-nav__link" for="nav-2-2">
+      Workflow Core
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="2">
+      <label class="md-nav__title" for="nav-2-2">
+        Workflow Core
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../core-workflow/" title="Workflow" class="md-nav__link">
+      Workflow
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active">
+    
+    <input class="md-toggle md-nav__toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+    
+      
+    
+    
+      <label class="md-nav__link md-nav__link--active" for="__toc">
+        Worker
+      </label>
+    
+    <a href="./" title="Worker" class="md-nav__link md-nav__link--active">
+      Worker
+    </a>
+    
+      
+<nav class="md-nav md-nav--secondary">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">Table of contents</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#the-role-of-a-worker" class="md-nav__link">
+    The Role of a Worker
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#workers-provide-a-declarative-window-into-the-imperative-world" class="md-nav__link">
+    Workers provide a declarative window into the imperative world
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#workers-can-perform-side-effects" class="md-nav__link">
+    Workers can perform side effects
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#workers-are-cold-reactive-streams" class="md-nav__link">
+    Workers are cold reactive streams
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#worker-subscriptions-are-managed-automatically" class="md-nav__link">
+    Worker subscriptions are managed automatically
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#workers-manage-their-own-internal-state" class="md-nav__link">
+    Workers manage their own internal state
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#workers-define-their-own-equivalence" class="md-nav__link">
+    Workers define their own equivalence
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#workers-are-lifecycle-aware" class="md-nav__link">
+    Workers are lifecycle-aware
+  </a>
+  
+</li>
+      
+      
+      
+      
+      
+    </ul>
+  
+</nav>
+    
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../core-patterns/" title="Patterns" class="md-nav__link">
+      Patterns
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../ui-concepts/" title="Workflow UI" class="md-nav__link">
+      Workflow UI
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../testing-concepts/" title="Workflow Testing" class="md-nav__link">
+      Workflow Testing
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../motivation/" title="Motivation & Architectural Concepts" class="md-nav__link">
+      Motivation & Architectural Concepts
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../comparison/" title="Comparison with other frameworks" class="md-nav__link">
+      Comparison with other frameworks
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../implementation/" title="Under the Hood: Implementation Notes" class="md-nav__link">
+      Under the Hood: Implementation Notes
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-3" type="checkbox" id="nav-3">
+    
+    <label class="md-nav__link" for="nav-3">
+      Tutorials & Samples
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-3">
+        Tutorials & Samples
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-3-1" type="checkbox" id="nav-3-1">
+    
+    <label class="md-nav__link" for="nav-3-1">
+      Tutorial
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="2">
+      <label class="md-nav__title" for="nav-3-1">
+        Tutorial
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../tutorial/" title="Overview" class="md-nav__link">
+      Overview
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../tutorial/adding-workflow-to-a-project/" title="Adding Workflow to a project" class="md-nav__link">
+      Adding Workflow to a project
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../tutorial/tooling/" title="Tooling" class="md-nav__link">
+      Tooling
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../tutorial/building-a-workflow/" title="Building a Workflow" class="md-nav__link">
+      Building a Workflow
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../tutorial/building-a-view-controller-from-screen/" title="Building a View Controller from a Screen" class="md-nav__link">
+      Building a View Controller from a Screen
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../tutorial/using-a-workflow-for-ui/" title="Using a Workflow to Show UI" class="md-nav__link">
+      Using a Workflow to Show UI
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../code-recipes/" title="Code Recipes" class="md-nav__link">
+      Code Recipes
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../development-process/" title="Development Process" class="md-nav__link">
+      Development Process
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-4" type="checkbox" id="nav-4">
+    
+    <label class="md-nav__link" for="nav-4">
+      API Reference
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-4">
+        API Reference
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../kotlin/api/workflow/" title="Kotlin" class="md-nav__link">
+      Kotlin
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-4-2" type="checkbox" id="nav-4-2">
+    
+    <label class="md-nav__link" for="nav-4-2">
+      Swift API
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="2">
+      <label class="md-nav__title" for="nav-4-2">
+        Swift API
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../swift/api/Workflow/" title="Workflow" class="md-nav__link">
+      Workflow 
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../swift/api/WorkflowUI/" title="WorkflowUI" class="md-nav__link">
+      WorkflowUI 
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../swift/api/WorkflowTesting/" title="WorkflowTesting" class="md-nav__link">
+      WorkflowTesting 
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../../faq/" title="FAQ" class="md-nav__link">
+      FAQ
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../../CHANGELOG/" title="Change Log ⏏" class="md-nav__link">
+      Change Log ⏏
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../../CONTRIBUTING/" title="Contributing" class="md-nav__link">
+      Contributing
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../../CODE_OF_CONDUCT/" title="Code of Conduct" class="md-nav__link">
+      Code of Conduct
+    </a>
+  </li>
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="toc">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+<nav class="md-nav md-nav--secondary">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">Table of contents</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#the-role-of-a-worker" class="md-nav__link">
+    The Role of a Worker
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#workers-provide-a-declarative-window-into-the-imperative-world" class="md-nav__link">
+    Workers provide a declarative window into the imperative world
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#workers-can-perform-side-effects" class="md-nav__link">
+    Workers can perform side effects
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#workers-are-cold-reactive-streams" class="md-nav__link">
+    Workers are cold reactive streams
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#worker-subscriptions-are-managed-automatically" class="md-nav__link">
+    Worker subscriptions are managed automatically
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#workers-manage-their-own-internal-state" class="md-nav__link">
+    Workers manage their own internal state
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#workers-define-their-own-equivalence" class="md-nav__link">
+    Workers define their own equivalence
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#workers-are-lifecycle-aware" class="md-nav__link">
+    Workers are lifecycle-aware
+  </a>
+  
+</li>
+      
+      
+      
+      
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content">
+            <article class="md-content__inner md-typeset">
+              
+                
+                  <a href="https://github.com/square/workflow/edit/master/docs/userguide/core-worker.md" title="Edit this page" class="md-icon md-content__icon">&#xE3C9;</a>
+                
+                
+                <h1 id="workflow-core-worker">Workflow Core: Worker<a class="headerlink" href="#workflow-core-worker" title="Permanent link">&para;</a></h1>
+<h2 id="the-role-of-a-worker">The Role of a Worker<a class="headerlink" href="#the-role-of-a-worker" title="Permanent link">&para;</a></h2>
+<p><code>Worker</code> is a protocol (in Swift) and interface (in Kotlin) that defines an asynchronous task that
+can be performed by a <code>Workflow</code>. <code>Worker</code>s only emit outputs, they do not have a <code>Rendering</code> type.
+They are similar to child workflows with <code>Void</code>/<code>Unit</code> rendering types.</p>
+<p>A workflow can ask the infrastructure to await the result of a worker by passing that worker to the
+<code>RenderContext.runningWorker</code> method within a call to the <code>render</code> method. A workflow can handle
+outputs from a <code>Worker</code>.</p>
+<h2 id="workers-provide-a-declarative-window-into-the-imperative-world">Workers provide a declarative window into the imperative world<a class="headerlink" href="#workers-provide-a-declarative-window-into-the-imperative-world" title="Permanent link">&para;</a></h2>
+<p>As nice as it is to write declarative code, real apps need to interact with imperative APIs. Workers
+allow wrapping imperative APIs so that Workflows can interact with them in a declarative fashion.
+Instead of making imperative &ldquo;start this, do that, now stop&rdquo; calls, a Workflow can say &ldquo;I declare
+that this task should now be running&rdquo; and let the infrastructure worry about ensuring the task is
+actually started when necessary, continues running if it was already in flight, and torn down when
+it&rsquo;s not needed anymore.</p>
+<h2 id="workers-can-perform-side-effects">Workers can perform side effects<a class="headerlink" href="#workers-can-perform-side-effects" title="Permanent link">&para;</a></h2>
+<p>Unlike workflows&rsquo; <code>render</code> method, which can be called many times and must be idempotent, workers
+are started and then ran until completion (or cancellation) – independently of how many times the
+workflow running them is actually rendered. This means that side effects that should be performed
+only once when a workflow enters a particular state, for example, should be placed into a <code>Worker</code>
+that the workflow runs while in that state.</p>
+<h2 id="workers-are-cold-reactive-streams">Workers are cold reactive streams<a class="headerlink" href="#workers-are-cold-reactive-streams" title="Permanent link">&para;</a></h2>
+<p>Workers are effectively simple wrappers around asynchronous streams with explicit equivalence. In
+Swift, workers are backed by ReactiveSwift <a href="http://reactivecocoa.io/reactiveswift/docs/latest/SignalProducer.html#/s:13ReactiveSwift14SignalProducerV"><code>SignalProducer</code>s</a>.
+In Kotlin, they&rsquo;re backed by Kotlin <a href="https://kotlin.github.io/kotlinx.coroutines/kotlinx-coroutines-core/kotlinx.coroutines.flow/-flow/"><code>Flow</code>s</a>.
+They are also easily derived from <a href="https://www.reactive-streams.org">Reactive Streams Publishers</a>,
+including RxJava <code>Observable</code>, <code>Flowable</code>, or <code>Single</code> instances.</p>
+<h2 id="worker-subscriptions-are-managed-automatically">Worker subscriptions are managed automatically<a class="headerlink" href="#worker-subscriptions-are-managed-automatically" title="Permanent link">&para;</a></h2>
+<p>While Workers are <em>backed</em> by reactive streams with library-specific subscription APIs, you never
+actually subscribe directly to a worker yourself. Instead, a Workflow asks the infrastructure to
+run a worker, and the infrastructure will take care of initializing and tearing down the
+subscription as appropriate – much like how child workflows&rsquo; lifetimes are automatically managed by
+the runtime. This makes it impossible to accidentally leak a subscription to a worker.</p>
+<h2 id="workers-manage-their-own-internal-state">Workers manage their <em>own</em> internal state<a class="headerlink" href="#workers-manage-their-own-internal-state" title="Permanent link">&para;</a></h2>
+<p>Unlike Workflows, which are effectively collections of functions defining state transitions, Workers
+represent long-running tasks. For example, Workers commonly execute network requests. The worker&rsquo;s
+stream will open a socket and, either blocking on a background thread or asynchronously, read from
+that socket and eventually emit data to the workflow that is running it.</p>
+<h2 id="workers-define-their-own-equivalence">Workers define their own equivalence<a class="headerlink" href="#workers-define-their-own-equivalence" title="Permanent link">&para;</a></h2>
+<p>Since Workers represent ongoing tasks, the infrastructure needs to be able to tell when two workers
+represent the same task (so it doesn&rsquo;t perform the task twice), or when a worker has changed between
+render passes such that it needs to be torn down and re-started for the new work.</p>
+<p>For these reasons, any time a workflow requests that a worker be run in sequential render passes, it
+is asked to compare itself with its last instance and determine if they are equivalent. In Swift,
+this is determined by the <code>Worker</code> <code>isEquivalent:to:</code> method. <code>Worker</code>s that conform to <code>Equatable</code>
+will automatically get an <code>isEquivalent:to:</code> method based on the <code>Equatable</code> implementation. In
+Kotlin, the <code>Worker</code> interface defines the <code>doesSameWorkAs</code> method which is passed the previous worker.</p>
+<div class="admonition faq">
+<p class="admonition-title">Kotlin: Why don&rsquo;t Workers use <code>equals</code>?</p>
+<p>Worker equivalence is a key part of the Worker API. The default implementation of <code>equals</code>,
+which just compares object identity, is almost always incorrect for workers. Defining a separate
+method forces implementers to think about how equivalence is defined.</p>
+</div>
+<h2 id="workers-are-lifecycle-aware">Workers are lifecycle-aware<a class="headerlink" href="#workers-are-lifecycle-aware" title="Permanent link">&para;</a></h2>
+<p>Workers are aware of when they&rsquo;re started (just like Workflows), but they are also aware of when
+they are torn down. This makes them handy for managing resources as well.</p>
+                
+                  
+                
+                
+              
+              
+                
+
+
+              
+            </article>
+          </div>
+        </div>
+      </main>
+      
+        
+<footer class="md-footer">
+  
+    <div class="md-footer-nav">
+      <nav class="md-footer-nav__inner md-grid">
+        
+          <a href="../core-workflow/" title="Workflow" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+            <div class="md-flex__cell md-flex__cell--shrink">
+              <i class="md-icon md-icon--arrow-back md-footer-nav__button"></i>
+            </div>
+            <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
+              <span class="md-flex__ellipsis">
+                <span class="md-footer-nav__direction">
+                  Previous
+                </span>
+                Workflow
+              </span>
+            </div>
+          </a>
+        
+        
+          <a href="../core-patterns/" title="Patterns" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
+            <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
+              <span class="md-flex__ellipsis">
+                <span class="md-footer-nav__direction">
+                  Next
+                </span>
+                Patterns
+              </span>
+            </div>
+            <div class="md-flex__cell md-flex__cell--shrink">
+              <i class="md-icon md-icon--arrow-forward md-footer-nav__button"></i>
+            </div>
+          </a>
+        
+      </nav>
+    </div>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-footer-copyright">
+        
+          <div class="md-footer-copyright__highlight">
+            Copyright &copy; 2019 Square, Inc.
+          </div>
+        
+        powered by
+        <a href="https://www.mkdocs.org" target="_blank" rel="noopener">MkDocs</a>
+        and
+        <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+          Material for MkDocs</a>
+      </div>
+      
+  <div class="md-footer-social">
+    <link rel="stylesheet" href="../../assets/fonts/font-awesome.css">
+    
+      <a href="https://square.github.io/" target="_blank" rel="noopener" title="globe" class="md-footer-social__link fa fa-globe"></a>
+    
+      <a href="https://github.com/square" target="_blank" rel="noopener" title="github-alt" class="md-footer-social__link fa fa-github-alt"></a>
+    
+      <a href="https://twitter.com/squareeng" target="_blank" rel="noopener" title="twitter" class="md-footer-social__link fa fa-twitter"></a>
+    
+      <a href="https://www.linkedin.com/company/joinsquare/" target="_blank" rel="noopener" title="linkedin" class="md-footer-social__link fa fa-linkedin"></a>
+    
+  </div>
+
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    
+      <script src="../../assets/javascripts/application.c33a9706.js"></script>
+      
+      <script>app.initialize({version:"1.1",url:{base:"../.."}})</script>
+      
+    
+  </body>
+</html>
